@@ -23,7 +23,7 @@ import java.util.List;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long reservationId; 
 
     @ManyToOne
     @JoinColumn(name = "booking_id") // Asegúrate de que el nombre de la columna coincide con la tabla en la base de datos
