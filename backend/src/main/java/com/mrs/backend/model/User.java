@@ -1,12 +1,5 @@
 package com.mrs.backend.model;
 
-import java.util.Collection;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,63 +9,50 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
-public class User implements UserDetails {
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 50) 
+    @NotBlank
+    @Size(max = 20)
+    @Column(name = "username")
     private String username;
 
-    @Column(nullable = false, columnDefinition = "text")  
-    private String password;
+    @NotBlank
+    @Size(max = 120)
+    @Column(name = "password")
+    private String password1;
 
-    @Column(length = 50)  
+    @NotBlank
+    @Size(max = 50)
+    @Column(name= "firstname")
     private String firstname;
 
-    @Column(length = 50)  
+    @Size(max = 50)
+    @Column(name = "lastname" )
     private String lastname;
 
-    @Column(length = 50) 
+    @Size(max = 20)
+    @Column(name = "country")
     private String country;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role_name")
     private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 
 }

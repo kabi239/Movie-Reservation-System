@@ -3,6 +3,7 @@ package com.mrs.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mrs.backend.model.User;
@@ -11,6 +12,7 @@ import com.mrs.backend.repository.UserRepository;
 @Service
 public class UserService {
 
+    @Autowired
     private UserRepository userRepository;  
 
     public List<User> getAllUsers() {
