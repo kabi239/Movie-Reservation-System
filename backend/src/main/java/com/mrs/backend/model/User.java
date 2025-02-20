@@ -9,11 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Data
@@ -25,7 +28,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @NotBlank
     @Size(max = 20)
@@ -35,7 +38,7 @@ public class User {
     @NotBlank
     @Size(max = 120)
     @Column(name = "password")
-    private String password1;
+    private String password;
 
     @NotBlank
     @Size(max = 50)
@@ -49,6 +52,11 @@ public class User {
     @Size(max = 20)
     @Column(name = "country")
     private String country;
+
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name")
