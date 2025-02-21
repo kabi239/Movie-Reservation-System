@@ -2,20 +2,15 @@ package com.mrs.backend.controller;
 
 import com.mrs.backend.payload.UserDTO;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-import com.mrs.backend.model.User;
 import com.mrs.backend.service.UserService;
 
 import java.util.List;
-
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +26,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @PostMapping("/users")
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
