@@ -37,34 +37,27 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
-        User user = modelMapper.map(userDTO, User.class);
-        User createdUser = userService.createUser(user);
-        UserDTO createdUserDTO = modelMapper.map(createdUser, UserDTO.class);
+        UserDTO createdUserDTO = userService.createUser(userDTO);
         return new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
     }
 
-//    @GetMapping("/users")
-//    public ResponseEntity<List<User>>getAllUsers() {
-//        List<User> allUsers = userService.getAllUsers();
-//        return new ResponseEntity<>(allUsers, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-//        Optional<User> user = userService.findById(id);
-//        if (user.isPresent()) {
-//            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-//        userService.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id"+id));
-//        userService.deleteById(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDTO>>getAllUsers() {
+        List<UserDTO> allUsers = userService.getAllUsers();
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        UserDTO userDTO= userService.getUserById(id);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity<>("User with UserId: "+id+" deleted successfully", HttpStatus.OK);
+    }
     
     
 

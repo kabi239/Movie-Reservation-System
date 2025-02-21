@@ -14,9 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @Data
@@ -36,6 +34,11 @@ public class User {
     private String username;
 
     @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    @NotBlank
     @Size(max = 120)
     @Column(name = "password")
     private String password;
@@ -52,11 +55,6 @@ public class User {
     @Size(max = 20)
     @Column(name = "country")
     private String country;
-
-    @NotBlank
-    @Size(max = 50)
-    @Email
-    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name")

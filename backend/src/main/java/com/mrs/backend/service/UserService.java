@@ -3,10 +3,13 @@ package com.mrs.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mrs.backend.exceptions.ResourceNotFoundException;
 import com.mrs.backend.model.User;
+import com.mrs.backend.payload.UserDTO;
 import com.mrs.backend.repository.UserRepository;
 
 @Service
@@ -15,19 +18,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;  
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+        User createdUser = userRepository.save(user);
+        return modelMapper.map(createdUser, UserDTO.class);
     }
-
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTO =users.stream().map(user -> 
+        modelMapper.map(user, UserDTO.class)).toList();
+        return userDTO;
     }
-
-    public void deleteById(Long id) {
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "userId", id));
+        return modelMapper.map(user, UserDTO.class);
+    }
+    public void deleteUserById(Long id) {
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "userId", id));
         userRepository.deleteById(id);
     }
 
