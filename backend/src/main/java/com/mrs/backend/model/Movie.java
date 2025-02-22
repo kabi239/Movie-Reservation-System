@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class Movie {
     @Column(name = "poster_image")
     private String posterImage;
 
-    @NotBlank(message = "Movie genre is required")
+    @NotNull(message = "Genre is required")
     @Column(name = "genre")
     @Enumerated(EnumType.STRING)
     private Genre genre;
