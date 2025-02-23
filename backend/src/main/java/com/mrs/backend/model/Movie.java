@@ -51,5 +51,10 @@ public class Movie {
     @NotBlank(message = "Duration is required")
     @Column(name = "duration")
     private String duration;
+
+    @NotNull(message = "Language is required")
+    @Column(name = "language")
+    @Enumerated(EnumType.STRING)
+    private Language language;
     
 }
