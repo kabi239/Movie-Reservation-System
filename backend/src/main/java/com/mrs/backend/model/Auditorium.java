@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,10 +22,11 @@ public class Auditorium {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auditoriumId;
 
+    @NotBlank(message = "Name is required")
     @Column(name = "auditorium_name")
     private String name;
 
-    @NotBlank(message = "Capacity is required")
+    @NotNull(message = "Capacity is required")
     @Column(name = "capacity")
-    private int capacity;
+    private Integer capacity;
 }
