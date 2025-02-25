@@ -13,6 +13,8 @@ import com.mrs.backend.payload.ReservationDTO;
 import com.mrs.backend.payload.ScheduleDTO;
 import com.mrs.backend.repository.ReservationsRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ReservationService {
 
@@ -47,6 +49,28 @@ public class ReservationService {
         reservationRepository.saveAll(newReservations);
 
         return newReservations.size() + " new reservations created";
+    }
+
+    @Transactional
+    public void addSeatsToReservation(Long schedule_id, List<String> seatIds) {
+        Reservation reservation = reservationRepository.findBySchedule_ScheduleId(schedule_id)
+        .orElseThrow(() -> new IllegalArgumentException("Reservation not found for given schedule id " + schedule_id));
+        List<String> currentSeats = reservation.getSeats();
+        currentSeats.addAll(seatIds);
+        reservationRepository.save(reservation);
+    }
+
+    public List<String> getOccupiedSeats(Long schedule_id) {
+        Reservation reservation = reservationRepository.findBySchedule_ScheduleId(schedule_id)
+        .orElseThrow(() -> new IllegalArgumentException("Reservation not found for given schedule id " + schedule_id));
+        return reservation.getSeats();
+
+    }
+
+    public List<ReservationDTO> getReservationByMovieId(Long movieId) {
+        List<Reservation> reservations = reservationRepository.findBySchedule_movie_movieId(movieId);
+        List<ReservationDTO> reservationDTO = reservations.stream().map(reserv -> modelMapper.map(reserv, ReservationDTO.class)).toList();
+        return reservationDTO;
     }
 
 }
