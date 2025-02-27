@@ -18,7 +18,7 @@ import com.mrs.backend.service.ReservationService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserReservationController {
     @Autowired
     private ReservationService reservationService;
